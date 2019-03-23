@@ -25,12 +25,7 @@ public class Network {
         if (sortType == R.id.sort_rating){
             sortChoice = "vote_average.desc";
         }
-        /*
-        String sortChoice = SORT_POPULAR;
-        if (sortType == R.id.sort_rating){
-            sortChoice = SORT_RATING;
-        }
-        */
+
         Uri builtUri = Uri.parse(BASE_DATA_URL).buildUpon()
                 .appendQueryParameter(P_API_KEY, API_KEY)
                 .appendQueryParameter(P_SORT, sortChoice)
@@ -49,8 +44,9 @@ public class Network {
     public static String createImageUrlString(String path){
         final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/";
         final String IMAGE_ERROR_500PX_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Attenzione_architetto_fr_01.svg/500px-Attenzione_architetto_fr_01.svg.png";
-        final String IMG_SIZE = "w500";
-        //String fullImagePath;
+        // size options...w125, w342, w500
+        final String IMG_SIZE = "w342";
+
         if (path == "null"){
             return IMAGE_ERROR_500PX_URL;
         }else{

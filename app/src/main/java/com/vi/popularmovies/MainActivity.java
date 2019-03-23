@@ -23,24 +23,34 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
     //private ArrayList<Movie> mMovies = new ArrayList<>();
     private PosterRecyclerAdapter mPosterRecyclerAdapter;
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArray("Movies", mMovies);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main_grid);
-
         initializeRecyclerView();
-        queryTheMovieDatabase(1);
+        if ( savedInstanceState != null){
+            mMovies = (Movie[]) savedInstanceState.getParcelableArray("Movies");
+            mPosterRecyclerAdapter = new PosterRecyclerAdapter(mMovies, this);
+            mRecyclerView.setAdapter(mPosterRecyclerAdapter);
+        }else{
+            queryTheMovieDatabase(1);
+
+        }
+
     }
 
 
     public void initializeRecyclerView (){
-        AutoFitGridLayoutManager autoFitGridLayoutManager = new AutoFitGridLayoutManager(this,500);
+        AutoFitGridLayoutManager autoFitGridLayoutManager = new AutoFitGridLayoutManager(this,342);
         mRecyclerView.setLayoutManager(autoFitGridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-       // mPosterRecyclerAdapter = new PosterRecyclerAdapter(mMovies);
-        //mRecyclerView.setAdapter(mPosterRecyclerAdapter);
     }
 
     public void queryTheMovieDatabase(int sortType){
@@ -56,9 +66,6 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
         Intent intentToStartDetailActivity = new Intent(this, DetailActivity.class);
         intentToStartDetailActivity.putExtra("Movie", movieToSend);
         startActivity(intentToStartDetailActivity);
-
-
-
     }
 
     public class QueryMovieDatabase extends AsyncTask<URL, Void, String>{
@@ -79,22 +86,19 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
 
         @Override
         protected void onPostExecute(String result) {
-            //super.onPostExecute(s);
             if ( result != null && result != ""){
                 try {
                     mMovies = Json.readMoviesJson(result);
                     mPosterRecyclerAdapter = new PosterRecyclerAdapter(mMovies, MainActivity.this);
                     mRecyclerView.setAdapter(mPosterRecyclerAdapter);
-                    //mRecyclerView.setAdapter(mPosterRecyclerAdapter);
-
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
-
             }
         }
     }
 
+    //Main Menu to Toggle Sort Types
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -114,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
             queryTheMovieDatabase(R.id.sort_rating);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

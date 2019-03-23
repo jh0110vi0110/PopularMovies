@@ -1,46 +1,8 @@
 package com.vi.popularmovies;
-/*
-{"page":1,"total_results":19853,"total_pages":993,"results":[
-{
-"vote_count":1176,
-"id":399579,
-"video":false,
-"vote_average":6.8,
-"title":"Alita: Battle Angel",
-"popularity":334.096,
-"poster_path":"\/xRWht48C2V8XNfzvPehyClOvDni.jpg",
-"original_language":"en",
-"original_title":"Alita: Battle Angel",
-"genre_ids":[28,878,53],
-"backdrop_path":"\/aQXTw3wIWuFMy0beXRiZ1xVKtcf.jpg",
-"adult":false,
-"overview":"When Alita awakens with no memory of who she is in a future world she does not recognize, she is taken in by Ido, a compassionate doctor who realizes that somewhere in this abandoned cyborg shell is the heart and soul of a young woman with an extraordinary past.",
-"release_date":"2019-01-31"
-},
-{
-"vote_count":31,
-"id":450001,
-"video":false,
-"vote_average":5.8,
-"title":"Master Z: Ip Man Legacy",
-"popularity":93.255,
-"poster_path":"\/f2PN2ff0VwcVUSgeJUx6pKHwp4r.jpg",
-"original_language":"cn",
-"original_title":"葉問外傳：張天志",
-"genre_ids":[28],
-"backdrop_path":"\/nv4KsjnhcSIZtuw2mkT9IxoQ5oq.jpg",
-"adult":false,
-"overview":"After being defeated by Ip Man, Cheung Tin Chi is attempting to keep a low profile. While going about his business, he gets into a fight with a foreigner by the name of Davidson, who is a big boss behind the bar district. Tin Chi fights hard with Wing Chun and earns respect.",
-"release_date":"2018-12-20"
-}
-]
-}
- */
-
 
 import android.os.Parcel;
 import android.os.Parcelable;
-//public class Movie {
+
 public class Movie implements Parcelable {
     // original_title (String)
     private String mOriginalTitle;
@@ -58,11 +20,7 @@ public class Movie implements Parcelable {
     private String mReleaseDate;
     //vote_count
     private String mVoteCount;
-/*
-    public Movie (){
 
-    }
-*/
     private Movie(Parcel in){
         this.mOriginalTitle = in.readString();
         this.mTitle = in.readString();
@@ -73,7 +31,6 @@ public class Movie implements Parcelable {
         this.mReleaseDate = in.readString();
         this.mVoteCount = in.readString();
     }
-
 
     public Movie(String mOriginalTitle, String mTitle, String mPosterUrl, String mBackdropUrl, String mOverview, String mUserRating, String mReleaseDate, String mVoteCount) {
         this.mOriginalTitle = mOriginalTitle;
@@ -165,7 +122,6 @@ public class Movie implements Parcelable {
         dest.writeString(mUserRating);
         dest.writeString(mReleaseDate);
         dest.writeString(mVoteCount);
-
     }
 
     static final Parcelable.Creator<Movie> CREATOR
