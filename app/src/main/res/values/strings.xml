@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Popular Movies</string>
+    <string name="title_default">Master Z: Ip Man Legacy</string>
+    <string name="original_title_default">葉問外傳：張天志</string>
+    <string name="overview_default">After being defeated by Ip Man, Cheung Tin Chi is attempting to keep a low profile. While going about his business, he gets into a fight with a foreigner by the name of Davidson, who is a big boss behind the bar district. Tin Chi fights hard with Wing Chun and earns respect.</string>
+    <string name="release_date_default">Released:\u0020</string>
+    <string name="vote_average_default">Avg Rating:\u0020</string>
+    <string name="vote_count_default">Votes:\u0020</string>
 </resources>

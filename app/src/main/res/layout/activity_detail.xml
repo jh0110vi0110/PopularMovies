@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimaryDark"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:orientation="vertical"
+    tools:context=".DetailActivity">
+
+    <android.support.v7.widget.CardView
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        android:layout_margin="5dp"
+        cardview:cardCornerRadius="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/iv_detail_background"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_gravity="top"
+            android:src="@mipmap/ic_launcher_round"/>
+
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        cardview:cardCornerRadius="20dp"
+        android:layout_margin="5dp"
+        android:id="@+id/cv_detail_title_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_detail_title"
+                android:text="@string/title_default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:padding="10dp"/>
+            <TextView
+                android:id="@+id/tv_detail_original_title"
+                android:text="@string/original_title_default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:padding="10dp" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        cardview:cardCornerRadius="20dp"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_detail_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:padding="10dp"
+            android:text="@string/overview_default"/>
+
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
+        cardview:cardCornerRadius="20dp"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_detail_vote_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/vote_count_default"
+                android:layout_weight="1"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/tv_detail_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/release_date_default"
+                android:layout_weight="1"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/tv_detail_vote_average"
+                android:text="@string/vote_average_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:padding="10dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
+</ScrollView>

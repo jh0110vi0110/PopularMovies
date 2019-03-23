@@ -1,0 +1,78 @@
+package com.vi.popularmovies;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+import com.vi.popularmovies.utils.Network;
+/*
+movieResults.getJSONObject(i).optString(ORIGINAL_TITLE),
+        movieResults.getJSONObject(i).optString(TITLE),
+        movieResults.getJSONObject(i).optString(POSTER_PATH),
+        movieResults.getJSONObject(i).optString(BACKDROP_PATH),
+        movieResults.getJSONObject(i).optString(OVERVIEW),
+        movieResults.getJSONObject(i).optString(VOTE_AVERAGE),
+        movieResults.getJSONObject(i).optString(RELEASE_DATE),
+        movieResults.getJSONObject(i).optString(VOTE_COUNT)
+*/
+
+public class DetailActivity extends AppCompatActivity {
+    private Movie mMovie;
+    private ImageView mDetailImageView;
+    private TextView mTitleTextView, mOriginalTitleTextView, mOverviewTextView, mVoteAverageTextView, mReleaseDateTextView, mVoteCountTextView;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail);
+        mDetailImageView = (ImageView) findViewById(R.id.iv_detail_background);
+        mTitleTextView = (TextView) findViewById(R.id.tv_detail_title);
+        mOriginalTitleTextView = (TextView) findViewById(R.id.tv_detail_original_title);
+        mOverviewTextView = (TextView) findViewById(R.id.tv_detail_overview);
+        mVoteAverageTextView = (TextView) findViewById(R.id.tv_detail_vote_average);
+        mReleaseDateTextView = (TextView) findViewById(R.id.tv_detail_release_date);
+        mVoteCountTextView = (TextView) findViewById(R.id.tv_detail_vote_count);
+
+
+
+
+
+        Intent intentThatStartedThisActivity = getIntent();
+
+        if (intentThatStartedThisActivity != null) {
+            if (intentThatStartedThisActivity.hasExtra("Movie")) {
+                //mForecast = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT);
+                mMovie = intentThatStartedThisActivity.getParcelableExtra("Movie");
+                //Set Poster Image with Picasso
+                Picasso.get()
+                        .load(Network.createImageUrlString(mMovie.getmPosterUrl()))
+                        .placeholder(R.drawable.ic_launcher_background)
+                        .error(R.drawable.ic_launcher_foreground)
+                        .resize(400, 400)
+                        //.centerInside()
+                        .centerCrop()
+                        .into(mDetailImageView);
+                //Set Text Views using the Extra
+                mTitleTextView.setText(mMovie.getmTitle());
+                mOriginalTitleTextView.setText(mMovie.getmOriginalTitle());
+                mOverviewTextView.setText(mMovie.getmOverview());
+                mVoteCountTextView.setText(getString(R.string.vote_count_default) + mMovie.getmVoteCount());
+                mReleaseDateTextView.setText(getString(R.string.release_date_default) + mMovie.getmReleaseDate());
+                mVoteAverageTextView.setText(getString(R.string.vote_average_default) + mMovie.getmUserRating());
+
+                if (mMovie.getmTitle().equals(mMovie.getmOriginalTitle())){
+                    mOriginalTitleTextView.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        }
+
+
+    }
+}
