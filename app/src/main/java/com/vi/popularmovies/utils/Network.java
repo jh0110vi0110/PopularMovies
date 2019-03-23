@@ -14,10 +14,7 @@ import java.util.Scanner;
 
 public class Network {
     private static final String TAG = "util.Network";
-    static final String API_KEY = "184f4b1cac9ad7b41ddbd2fedc234199";
-    //public static final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/";
-    //public static final String IMAGE_ERROR_500PX_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Attenzione_architetto_fr_01.svg/500px-Attenzione_architetto_fr_01.svg.png";
-    //public static final String IMG_SIZE = "w500";
+    static final String API_KEY = "API KEY HERE";
 
     public static URL buildDataUrl(int sortType) {
         final String BASE_DATA_URL = "http://api.themoviedb.org/3/discover/movie";
