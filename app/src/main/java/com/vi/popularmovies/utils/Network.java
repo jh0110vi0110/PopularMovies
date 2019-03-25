@@ -12,24 +12,43 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+//http://api.themoviedb.org/3/movie/popular?api_key=KEY
+//http://api.themoviedb.org/3/movie/top_rated?api_key=KEY
+
+
 public class Network {
     private static final String TAG = "util.Network";
-    static final String API_KEY = "API KEY HERE";
+    static final String API_KEY = "API KEY GOES HERE";
 
+    //discover endpoint is encouraged to use in the webcast, however goes against the rubric
+    //discover endpoint code is commented out.
     public static URL buildDataUrl(int sortType) {
-        final String BASE_DATA_URL = "http://api.themoviedb.org/3/discover/movie";
+        //final String BASE_DATA_URL = "http://api.themoviedb.org/3/discover/movie";
+        final String BASE_DATA_URL = "http://api.themoviedb.org/3/movie";
         final String P_API_KEY = "api_key";
-        final String P_SORT = "sort_by";
+        //final String P_SORT = "sort_by";
 
+
+        /*
         String sortChoice = "popularity.desc";
         if (sortType == R.id.sort_rating){
             sortChoice = "vote_average.desc";
         }
-
+        */
+        String queryType = "popular";
+        if (sortType == R.id.sort_rating){
+            queryType = "top_rated";
+        }
+        Uri builtUri = Uri.parse(BASE_DATA_URL).buildUpon()
+                .appendPath(queryType)
+                .appendQueryParameter(P_API_KEY, API_KEY)
+                .build();
+        /*
         Uri builtUri = Uri.parse(BASE_DATA_URL).buildUpon()
                 .appendQueryParameter(P_API_KEY, API_KEY)
                 .appendQueryParameter(P_SORT, sortChoice)
                 .build();
+        */
         URL url = null;
         try {
             url = new URL(builtUri.toString());
