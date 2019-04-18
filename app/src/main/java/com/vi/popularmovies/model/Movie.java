@@ -1,34 +1,27 @@
-package com.vi.popularmovies;
+package com.vi.popularmovies.model;
 
-import android.arch.persistence.room.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-@Entity (tableName = "movie")
+
 public class Movie implements Parcelable {
 
-
-
-    // id
     private String mId;
-    // original_title (String)
     private String mOriginalTitle;
-    //title (Localized) (String)
     private String mTitle;
-    // poster_path (String)
     private String mPosterUrl;
-    //backdrop_path
     private String mBackdropUrl;
-    //plot_overview (String)
     private String mOverview;
-    //vote_average
     private String mUserRating;
-    //release_date
     private String mReleaseDate;
-    //vote_count
     private String mVoteCount;
 
+
+
+
+
     private Movie(Parcel in){
+        this.mId = in.readString();
         this.mOriginalTitle = in.readString();
         this.mTitle = in.readString();
         this.mPosterUrl = in.readString();
@@ -126,6 +119,8 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        // done TODO add Id and other data here
+        dest.writeString(mId);
         dest.writeString(mOriginalTitle);
         dest.writeString(mTitle);
         dest.writeString(mPosterUrl);
@@ -149,5 +144,4 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
-
 }

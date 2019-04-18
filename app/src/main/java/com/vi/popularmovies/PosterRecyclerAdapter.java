@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.vi.popularmovies.model.Movie;
 import com.vi.popularmovies.utils.Network;
 
 public class PosterRecyclerAdapter extends RecyclerView.Adapter<PosterRecyclerAdapter.PosterViewHolder> {

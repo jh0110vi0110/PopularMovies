@@ -12,29 +12,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-//http://api.themoviedb.org/3/movie/popular?api_key=KEY
-//http://api.themoviedb.org/3/movie/top_rated?api_key=KEY
-
-
 public class Network {
     private static final String TAG = "util.Network";
-    static final String API_KEY = "API KEY GOES HERE";
+    private static final String P_API_KEY = "api_key";
+    private static final String API_KEY = "API KEY GOES HERE";
+    private static final String BASE_DATA_URL = "http://api.themoviedb.org/3/movie";
 
-    //discover endpoint is encouraged to use in the webcast, however goes against the rubric
-    //discover endpoint code is commented out.
     public static URL buildDataUrl(int sortType) {
-        //final String BASE_DATA_URL = "http://api.themoviedb.org/3/discover/movie";
-        final String BASE_DATA_URL = "http://api.themoviedb.org/3/movie";
-        final String P_API_KEY = "api_key";
-        //final String P_SORT = "sort_by";
 
-
-        /*
-        String sortChoice = "popularity.desc";
-        if (sortType == R.id.sort_rating){
-            sortChoice = "vote_average.desc";
-        }
-        */
         String queryType = "popular";
         if (sortType == R.id.sort_rating){
             queryType = "top_rated";
@@ -43,12 +28,37 @@ public class Network {
                 .appendPath(queryType)
                 .appendQueryParameter(P_API_KEY, API_KEY)
                 .build();
-        /*
+        return getUrl(builtUri);
+    }
+
+    public static URL buildDetailDataUrl (String movieId, String urlType){
+        if ( movieId == null || urlType == null ){
+            return null;
+        }
         Uri builtUri = Uri.parse(BASE_DATA_URL).buildUpon()
+                .appendPath(movieId)
+                .appendPath(urlType)
                 .appendQueryParameter(P_API_KEY, API_KEY)
-                .appendQueryParameter(P_SORT, sortChoice)
                 .build();
-        */
+        return getUrl(builtUri);
+
+    }
+
+    public static URL buildYoutubeUrl (String key){
+        // https://www.youtube.com/watch?v=4vPeTSRd580
+        if (key == null || key.equals("")){
+            return null;
+        }
+        final String BASE_YOUTUBE_URL = "https://www.youtube.com/watch";
+        final String P_VIDEO_KEY = "v";
+        Uri builtUri = Uri.parse(BASE_YOUTUBE_URL).buildUpon()
+                .appendQueryParameter(P_VIDEO_KEY, key)
+                .build();
+        return getUrl(builtUri);
+
+    }
+
+    private static URL getUrl(Uri builtUri) {
         URL url = null;
         try {
             url = new URL(builtUri.toString());

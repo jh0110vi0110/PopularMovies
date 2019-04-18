@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.vi.popularmovies.model.Movie;
 import com.vi.popularmovies.utils.Json;
 import com.vi.popularmovies.utils.Network;
 
@@ -15,7 +16,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements PosterRecyclerAdapter.OnPosterListener {
     private RecyclerView mRecyclerView;
