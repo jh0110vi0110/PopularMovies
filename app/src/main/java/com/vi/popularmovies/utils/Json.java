@@ -1,14 +1,20 @@
 package com.vi.popularmovies.utils;
 
+import android.util.Log;
+
 import com.vi.popularmovies.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static android.content.ContentValues.TAG;
+
 public class Json {
 
     //JSON Keys
+    // id
+    private final static String ID = "id";
     // results
     private final static String RESULTS = "results";
     // original_title
@@ -35,6 +41,7 @@ public class Json {
 
         for (int i = 0; i < movieResults.length(); i++){
             Movie movie = new Movie(
+                    movieResults.getJSONObject(i).optString(ID),
                     movieResults.getJSONObject(i).optString(ORIGINAL_TITLE),
                     movieResults.getJSONObject(i).optString(TITLE),
                     movieResults.getJSONObject(i).optString(POSTER_PATH),
@@ -45,15 +52,8 @@ public class Json {
                     movieResults.getJSONObject(i).optString(VOTE_COUNT)
             );
 
-            //movie.setmTitle(movieResults.getJSONObject(i).optString(TITLE));
-            //movie.setmOriginalTitle(movieResults.getJSONObject(i).optString(ORIGINAL_TITLE));
-            //movie.setmPosterUrl(movieResults.getJSONObject(i).optString(POSTER_PATH));
-            //movie.setmBackdropUrl(movieResults.getJSONObject(i).optString(BACKDROP_PATH));
-            //movie.setmOverview(movieResults.getJSONObject(i).optString(OVERVIEW));
-            //movie.setmUserRating(movieResults.getJSONObject(i).optString(VOTE_AVERAGE));
-            //movie.setmReleaseDate(movieResults.getJSONObject(i).optString(RELEASE_DATE));
-            //movie.setmVoteCount(movieResults.getJSONObject(i).optString(VOTE_COUNT));
             movieData[i] = movie;
+            Log.d(TAG, "readMoviesJson: ID Received: " + movieData[i].getmTitle() + " " + movieData[i].getmId() );
 
         }
 

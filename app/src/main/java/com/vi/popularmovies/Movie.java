@@ -1,9 +1,16 @@
 package com.vi.popularmovies;
 
+import android.arch.persistence.room.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+@Entity (tableName = "movie")
 public class Movie implements Parcelable {
+
+
+
+    // id
+    private String mId;
     // original_title (String)
     private String mOriginalTitle;
     //title (Localized) (String)
@@ -32,7 +39,8 @@ public class Movie implements Parcelable {
         this.mVoteCount = in.readString();
     }
 
-    public Movie(String mOriginalTitle, String mTitle, String mPosterUrl, String mBackdropUrl, String mOverview, String mUserRating, String mReleaseDate, String mVoteCount) {
+    public Movie( String mId, String mOriginalTitle, String mTitle, String mPosterUrl, String mBackdropUrl, String mOverview, String mUserRating, String mReleaseDate, String mVoteCount) {
+        this.mId = mId;
         this.mOriginalTitle = mOriginalTitle;
         this.mTitle = mTitle;
         this.mPosterUrl = mPosterUrl;
@@ -42,6 +50,10 @@ public class Movie implements Parcelable {
         this.mReleaseDate = mReleaseDate;
         this.mVoteCount = mVoteCount;
     }
+
+    public String getmId() { return mId; }
+
+    public void setmId(String mId) { this.mId = mId; }
 
     public String getmOriginalTitle() {
         return mOriginalTitle;
