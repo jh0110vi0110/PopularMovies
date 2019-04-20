@@ -16,10 +16,6 @@ public class Movie implements Parcelable {
     private String mReleaseDate;
     private String mVoteCount;
 
-
-
-
-
     private Movie(Parcel in){
         this.mId = in.readString();
         this.mOriginalTitle = in.readString();
