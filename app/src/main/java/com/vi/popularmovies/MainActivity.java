@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.vi.popularmovies.database.MovieFavorite;
 import com.vi.popularmovies.model.Movie;
 import com.vi.popularmovies.utils.Json;
 import com.vi.popularmovies.utils.Network;
@@ -20,6 +21,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity implements PosterRecyclerAdapter.OnPosterListener {
     private RecyclerView mRecyclerView;
     private Movie[] mMovies;
+    private MovieFavorite[] mMovieFavorites;
     //private ArrayList<Movie> mMovies = new ArrayList<>();
     private PosterRecyclerAdapter mPosterRecyclerAdapter;
 
@@ -54,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
     }
 
     public void queryTheMovieDatabase(int sortType){
-
         URL dataUrl = Network.buildDataUrl(sortType);
         new QueryMovieDatabase().execute(dataUrl);
     }
@@ -96,6 +97,10 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
                 }
             }
         }
+    }
+
+    public void setupViewModel(){
+
     }
 
     //Main Menu to Toggle Sort Types

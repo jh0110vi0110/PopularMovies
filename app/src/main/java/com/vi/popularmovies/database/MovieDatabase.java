@@ -29,4 +29,6 @@ public abstract class MovieDatabase extends RoomDatabase {
         return sInstance;
     }
 
+    public abstract MovieDao movieDao();
+
 }
