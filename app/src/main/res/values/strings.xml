@@ -7,6 +7,8 @@
     <string name="vote_average_default">Avg Rating:\u0020</string>
     <string name="vote_count_default">Votes:\u0020</string>
 
+    <string name="trailers_label">Trailers:</string>
+
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
     <string name="favorites">Favorites</string>

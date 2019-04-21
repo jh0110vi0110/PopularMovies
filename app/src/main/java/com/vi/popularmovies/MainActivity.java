@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_main_grid);
+
         initializeRecyclerView();
         //setupViewModel();
 
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
     }
 
     public void initializeRecyclerView (){
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_main_grid);
         AutoFitGridLayoutManager autoFitGridLayoutManager = new AutoFitGridLayoutManager(this,342);
         mRecyclerView.setLayoutManager(autoFitGridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
