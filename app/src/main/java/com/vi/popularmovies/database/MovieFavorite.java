@@ -2,7 +2,10 @@ package com.vi.popularmovies.database;
 
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+
+import com.vi.popularmovies.model.Movie;
 
 @Entity (tableName = "movieFavorite")
 public class MovieFavorite {
@@ -31,6 +34,21 @@ public class MovieFavorite {
         this.userRating = userRating;
         this.releaseDate = releaseDate;
         this.voteCount = voteCount;
+    }
+
+    @Ignore
+    public MovieFavorite (Movie movie){
+        this.databaseId = Integer.valueOf(movie.getmId());
+        this.originalTitle = movie.getmOriginalTitle();
+        this.title = movie.getmTitle();
+        this.posterUrl = movie.getmPosterUrl();
+        this.backdropUrl = movie.getmBackdropUrl();
+        this.overview = movie.getmOverview();
+        this.userRating = movie.getmUserRating();
+        this.releaseDate = movie.getmReleaseDate();
+        this.voteCount = movie.getmVoteCount();
+
+
     }
 
     public int getDatabaseId() { return databaseId; }

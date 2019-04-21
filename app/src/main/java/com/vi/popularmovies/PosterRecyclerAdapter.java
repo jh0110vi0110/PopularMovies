@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.vi.popularmovies.database.MovieFavorite;
 import com.vi.popularmovies.model.Movie;
 import com.vi.popularmovies.utils.Network;
 
@@ -20,6 +21,22 @@ public class PosterRecyclerAdapter extends RecyclerView.Adapter<PosterRecyclerAd
     public PosterRecyclerAdapter (Movie[] movies, OnPosterListener onPosterListener) {
         this.mMovies = movies;
         this.mOnPosterListener = onPosterListener;
+    }
+
+    public void setMovieData( Movie[] movieItemList) {
+        mMovies = movieItemList;
+        notifyDataSetChanged();
+    }
+
+    public void setMovieData( MovieFavorite[] movieFavorites) {
+        Movie[] movies = new Movie[movieFavorites.length];
+
+        for (int i = 0; i < movieFavorites.length; i++){
+            //Movie movieConvert = new Movie(movieFavorites[i]);
+            movies[i] = new Movie(movieFavorites[i]);
+        }
+        mMovies = movies;
+        notifyDataSetChanged();
     }
 
     @NonNull

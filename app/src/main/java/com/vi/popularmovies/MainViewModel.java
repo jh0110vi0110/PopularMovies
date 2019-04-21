@@ -12,7 +12,6 @@ import com.vi.popularmovies.database.MovieFavorite;
 public class MainViewModel extends AndroidViewModel {
 
     private static final String TAG = MainViewModel.class.getSimpleName();
-
     private LiveData<MovieFavorite[]> movies;
 
     public MainViewModel(@NonNull Application application) {

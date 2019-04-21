@@ -1,7 +1,11 @@
 package com.vi.popularmovies;
 
+import android.app.Application;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -19,16 +23,21 @@ import java.io.IOException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements PosterRecyclerAdapter.OnPosterListener {
+
+    private static int currentSort;
     private RecyclerView mRecyclerView;
     private Movie[] mMovies;
-    private MovieFavorite[] mMovieFavorites;
-    //private ArrayList<Movie> mMovies = new ArrayList<>();
+    //private MovieFavorite[] mMovieFavorites;
+
     private PosterRecyclerAdapter mPosterRecyclerAdapter;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArray("Movies", mMovies);
-        super.onSaveInstanceState(outState);
+        if (currentSort != R.id.sort_favorites) {
+            outState.putParcelableArray("Movies", mMovies);
+            outState.putInt("currentSort", currentSort);
+            super.onSaveInstanceState(outState);
+        }
     }
 
     @Override
@@ -37,22 +46,41 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main_grid);
         initializeRecyclerView();
-        if ( savedInstanceState != null){
-            mMovies = (Movie[]) savedInstanceState.getParcelableArray("Movies");
-            mPosterRecyclerAdapter = new PosterRecyclerAdapter(mMovies, this);
-            mRecyclerView.setAdapter(mPosterRecyclerAdapter);
-        }else{
-            queryTheMovieDatabase(1);
+        //setupViewModel();
 
+        if ( savedInstanceState != null){
+            //restore state of network data
+            mMovies = (Movie[]) savedInstanceState.getParcelableArray("Movies");
+            currentSort = savedInstanceState.getInt("currentSort", R.id.sort_popular);
+            setDisplayedSortType(currentSort);
+            mPosterRecyclerAdapter.setMovieData(mMovies);
+        }else{
+            //new creation
+            currentSort = R.id.sort_popular;
+            setDisplayedSortType(currentSort);
+            queryTheMovieDatabase(currentSort);
         }
 
     }
-
 
     public void initializeRecyclerView (){
         AutoFitGridLayoutManager autoFitGridLayoutManager = new AutoFitGridLayoutManager(this,342);
         mRecyclerView.setLayoutManager(autoFitGridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
+        mPosterRecyclerAdapter = new PosterRecyclerAdapter(mMovies, this);
+        mRecyclerView.setAdapter(mPosterRecyclerAdapter);
+    }
+
+    public void displayMovies(){
+
+    }
+
+    private void clearMovies() {
+        if (mMovies != null) {
+            mMovies = new Movie[mMovies.length];
+        } else {
+            mMovies = new Movie[0];
+        }
     }
 
     public void queryTheMovieDatabase(int sortType){
@@ -90,8 +118,7 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
             if ( result != null && result != ""){
                 try {
                     mMovies = Json.readMoviesJson(result);
-                    mPosterRecyclerAdapter = new PosterRecyclerAdapter(mMovies, MainActivity.this);
-                    mRecyclerView.setAdapter(mPosterRecyclerAdapter);
+                    mPosterRecyclerAdapter.setMovieData(mMovies);
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
@@ -100,6 +127,14 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
     }
 
     public void setupViewModel(){
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getMovies().observe(this, new Observer<MovieFavorite[]>() {
+            @Override
+            public void onChanged(@Nullable MovieFavorite[] movieFavorites) {
+                mPosterRecyclerAdapter.setMovieData(movieFavorites);
+
+            }
+        });
 
     }
 
@@ -113,16 +148,37 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemClicked = item.getItemId();
+        if (currentSort == itemClicked){
+            return true;
+        }
         if (itemClicked == R.id.sort_popular){
+            currentSort = R.id.sort_popular;
+            setDisplayedSortType(R.id.sort_popular);
             //sort by popularity.desc
             queryTheMovieDatabase(R.id.sort_popular);
             return true;
-
         }else if (itemClicked == R.id.sort_rating){
+            currentSort = R.id.sort_rating;
+            setDisplayedSortType(R.id.sort_rating);
             //use sort by vote_average.desc
             queryTheMovieDatabase(R.id.sort_rating);
             return true;
+        }else if (itemClicked == R.id.sort_favorites){
+            currentSort = R.id.sort_favorites;
+            setDisplayedSortType(R.id.sort_favorites);
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setDisplayedSortType (int sortType){
+
+        if (sortType == R.id.sort_popular){
+            setTitle(getString(R.string.app_name) + " - " + getString(R.string.popular));
+        }else if (sortType == R.id.sort_rating){
+            setTitle(getString(R.string.app_name) + " - " + getString(R.string.top_rated));
+        }else if (sortType == R.id.sort_favorites){
+            setTitle(getString(R.string.app_name) + " - " + getString(R.string.favorites));
+        }
     }
 }

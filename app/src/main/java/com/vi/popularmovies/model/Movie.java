@@ -3,6 +3,8 @@ package com.vi.popularmovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.vi.popularmovies.database.MovieFavorite;
+
 
 public class Movie implements Parcelable {
 
@@ -38,6 +40,19 @@ public class Movie implements Parcelable {
         this.mUserRating = mUserRating;
         this.mReleaseDate = mReleaseDate;
         this.mVoteCount = mVoteCount;
+    }
+
+    public Movie(MovieFavorite movieFavorite){
+        this.mId = String.valueOf(movieFavorite.getDatabaseId());
+        this.mOriginalTitle = movieFavorite.getOriginalTitle();
+        this.mTitle = movieFavorite.getTitle();
+        this.mPosterUrl = movieFavorite.getPosterUrl();
+        this.mBackdropUrl = movieFavorite.getBackdropUrl();
+        this.mOverview = movieFavorite.getOverview();
+        this.mUserRating = movieFavorite.getUserRating();
+        this.mReleaseDate = movieFavorite.getReleaseDate();
+        this.mVoteCount = movieFavorite.getVoteCount();
+
     }
 
     public String getmId() { return mId; }
