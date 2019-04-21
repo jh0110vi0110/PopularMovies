@@ -51,7 +51,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerRecycler
 
                 //Set Poster Image with Picasso
                 Picasso.get()
-                        .load(Network.createImageUrlString(mMovie.getmPosterUrl()))
+                        .load(Network.createImageUrlString(mMovie.getmBackdropUrl()))
                         .placeholder(R.drawable.ic_launcher_background)
                         .error(R.drawable.ic_launcher_foreground)
                         .resize(350, 350)
