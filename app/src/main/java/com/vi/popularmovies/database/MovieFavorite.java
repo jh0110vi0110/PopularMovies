@@ -36,9 +36,9 @@ public class MovieFavorite {
         this.voteCount = voteCount;
     }
 
-    @Ignore
+
     public MovieFavorite (Movie movie){
-        this.databaseId = Integer.valueOf(movie.getmId());
+        this.databaseId = Integer.parseInt(movie.getmId());
         this.originalTitle = movie.getmOriginalTitle();
         this.title = movie.getmTitle();
         this.posterUrl = movie.getmPosterUrl();

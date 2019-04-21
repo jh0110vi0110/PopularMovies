@@ -28,6 +28,7 @@ public class PosterRecyclerAdapter extends RecyclerView.Adapter<PosterRecyclerAd
         notifyDataSetChanged();
     }
 
+    /*
     public void setMovieData( MovieFavorite[] movieFavorites) {
         Movie[] movies = new Movie[movieFavorites.length];
 
@@ -38,6 +39,7 @@ public class PosterRecyclerAdapter extends RecyclerView.Adapter<PosterRecyclerAd
         mMovies = movies;
         notifyDataSetChanged();
     }
+    */
 
     @NonNull
     @Override

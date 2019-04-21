@@ -27,17 +27,15 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
     private static int currentSort;
     private RecyclerView mRecyclerView;
     private Movie[] mMovies;
-    //private MovieFavorite[] mMovieFavorites;
+    private MovieFavorite[] mMovieFavorites = new MovieFavorite[0];
 
     private PosterRecyclerAdapter mPosterRecyclerAdapter;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if (currentSort != R.id.sort_favorites) {
             outState.putParcelableArray("Movies", mMovies);
             outState.putInt("currentSort", currentSort);
             super.onSaveInstanceState(outState);
-        }
     }
 
     @Override
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
         setContentView(R.layout.activity_main);
 
         initializeRecyclerView();
-        //setupViewModel();
+        setupViewModel();
 
         if ( savedInstanceState != null){
             //restore state of network data
@@ -91,6 +89,14 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
 
     @Override
     public void onPosterClick(int position) {
+        /*
+        Movie movieToSend;
+        if (currentSort == R.id.sort_favorites){
+            movieToSend = new Movie(mMovieFavorites[position]);
+        }else {
+            movieToSend = mMovies[position];
+        }
+        */
         Movie movieToSend = mMovies[position];
         //Navigate to New Activity
         Intent intentToStartDetailActivity = new Intent(this, DetailActivity.class);
@@ -132,8 +138,13 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
         viewModel.getMovies().observe(this, new Observer<MovieFavorite[]>() {
             @Override
             public void onChanged(@Nullable MovieFavorite[] movieFavorites) {
-                mPosterRecyclerAdapter.setMovieData(movieFavorites);
-
+                if (movieFavorites.length >= 0){
+                    mMovieFavorites = movieFavorites;
+                    if (currentSort == R.id.sort_favorites){
+                        mMovies = convertMovieArray(mMovieFavorites);
+                        mPosterRecyclerAdapter.setMovieData(mMovies);
+                    }
+                }
             }
         });
 
@@ -167,6 +178,8 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
         }else if (itemClicked == R.id.sort_favorites){
             currentSort = R.id.sort_favorites;
             setDisplayedSortType(R.id.sort_favorites);
+            mMovies = convertMovieArray(mMovieFavorites);
+            mPosterRecyclerAdapter.setMovieData(mMovies);
 
         }
         return super.onOptionsItemSelected(item);
@@ -181,5 +194,25 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
         }else if (sortType == R.id.sort_favorites){
             setTitle(getString(R.string.app_name) + " - " + getString(R.string.favorites));
         }
+    }
+
+    public Movie[] convertMovieArray( MovieFavorite[] movieFavorites) {
+        Movie[] movies = new Movie[movieFavorites.length];
+
+        for (int i = 0; i < movieFavorites.length; i++) {
+            //Movie movieConvert = new Movie(movieFavorites[i]);
+            movies[i] = new Movie(movieFavorites[i]);
+        }
+        return movies;
+    }
+
+    public MovieFavorite[] convertMovieArray( Movie[] movies) {
+        MovieFavorite[] movieFavorites = new MovieFavorite[movies.length];
+
+        for (int i = 0; i < movies.length; i++) {
+            //Movie movieConvert = new Movie(movieFavorites[i]);
+            movieFavorites[i] = new MovieFavorite(movies[i]);
+        }
+        return movieFavorites;
     }
 }
