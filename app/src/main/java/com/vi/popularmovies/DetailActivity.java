@@ -3,10 +3,12 @@ package com.vi.popularmovies;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +20,9 @@ import com.vi.popularmovies.model.Movie;
 import com.vi.popularmovies.model.MovieReview;
 import com.vi.popularmovies.model.MovieTrailer;
 import com.vi.popularmovies.utils.Network;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity implements TrailerRecyclerAdapter.OnTrailerListener {
     private Movie mMovie;
@@ -41,6 +46,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerRecycler
         displayMovieDetails();
         initializeTrailerRecyclerview();
         checkDbIfFavorite();
+        new DetailsQuery().execute(mMovie.getmId());
     }
 
     public void checkDbIfFavorite(){
@@ -156,6 +162,45 @@ public class DetailActivity extends AppCompatActivity implements TrailerRecycler
             startActivity(appIntent);
         } catch (ActivityNotFoundException e) {
             startActivity(webIntent);
+        }
+    }
+
+    public class DetailsQuery extends AsyncTask<String, Void, ArrayList<String>>{
+        private final String TAG = DetailsQuery.class.getSimpleName();
+
+        @Override
+        protected ArrayList<String> doInBackground(String... strings) {
+            String videoId = strings[0];
+            ArrayList<String> queryResults = new ArrayList<String>();
+
+            try {
+                queryResults.add(Network.getResponseFromHttpUrl(Network.buildDetailDataUrl(videoId, "videos")));
+            }catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+            try {
+                queryResults.add(Network.getResponseFromHttpUrl(Network.buildDetailDataUrl(videoId, "reviews")));
+            }catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+            return queryResults;
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> strings) {
+            Log.d(TAG, "DetailsQuery onPostExecute: payload size is: " + strings.size() );
+            if (strings.size() != 2){
+                return;
+            }
+            String trailerJsonString = strings.get(0);
+            String reviewsJsonString = strings.get(1);
+            Log.d(TAG, "onPostExecute: trailerStringJson: " + trailerJsonString );
+            Log.d(TAG, "onPostExecute: reviewStringJson: " + reviewsJsonString );
+
+            super.onPostExecute(strings);
         }
     }
 }

@@ -70,10 +70,6 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
         mRecyclerView.setAdapter(mPosterRecyclerAdapter);
     }
 
-    public void displayMovies(){
-
-    }
-
     private void clearMovies() {
         if (mMovies != null) {
             mMovies = new Movie[mMovies.length];
@@ -89,14 +85,6 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
 
     @Override
     public void onPosterClick(int position) {
-        /*
-        Movie movieToSend;
-        if (currentSort == R.id.sort_favorites){
-            movieToSend = new Movie(mMovieFavorites[position]);
-        }else {
-            movieToSend = mMovies[position];
-        }
-        */
         Movie movieToSend = mMovies[position];
         //Navigate to New Activity
         Intent intentToStartDetailActivity = new Intent(this, DetailActivity.class);
@@ -186,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements PosterRecyclerAda
     }
 
     public void setDisplayedSortType (int sortType){
-
         if (sortType == R.id.sort_popular){
             setTitle(getString(R.string.app_name) + " - " + getString(R.string.popular));
         }else if (sortType == R.id.sort_rating){

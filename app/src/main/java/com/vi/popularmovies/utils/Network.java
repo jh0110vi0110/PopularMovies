@@ -32,6 +32,7 @@ public class Network {
     }
 
     public static URL buildDetailDataUrl (String movieId, String urlType){
+        //urlType "videos" or "reviews"
         if ( movieId == null || urlType == null ){
             return null;
         }

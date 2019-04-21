@@ -28,19 +28,6 @@ public class PosterRecyclerAdapter extends RecyclerView.Adapter<PosterRecyclerAd
         notifyDataSetChanged();
     }
 
-    /*
-    public void setMovieData( MovieFavorite[] movieFavorites) {
-        Movie[] movies = new Movie[movieFavorites.length];
-
-        for (int i = 0; i < movieFavorites.length; i++){
-            //Movie movieConvert = new Movie(movieFavorites[i]);
-            movies[i] = new Movie(movieFavorites[i]);
-        }
-        mMovies = movies;
-        notifyDataSetChanged();
-    }
-    */
-
     @NonNull
     @Override
     public PosterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
