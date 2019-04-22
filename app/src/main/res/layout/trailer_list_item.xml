@@ -10,7 +10,9 @@
         android:id="@+id/iv_trailer_play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_trailer_play_button"/>
+        android:src="@drawable/ic_trailer_play_button"
+        android:layout_gravity="start|center_vertical"
+        android:paddingRight="5dp"/>
     <TextView
         android:id="@+id/tv_trailer_name"
         android:layout_width="wrap_content"

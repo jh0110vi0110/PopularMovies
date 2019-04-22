@@ -19,7 +19,10 @@ import com.vi.popularmovies.database.MovieFavorite;
 import com.vi.popularmovies.model.Movie;
 import com.vi.popularmovies.model.MovieReview;
 import com.vi.popularmovies.model.MovieTrailer;
+import com.vi.popularmovies.utils.Json;
 import com.vi.popularmovies.utils.Network;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -199,6 +202,18 @@ public class DetailActivity extends AppCompatActivity implements TrailerRecycler
             String reviewsJsonString = strings.get(1);
             Log.d(TAG, "onPostExecute: trailerStringJson: " + trailerJsonString );
             Log.d(TAG, "onPostExecute: reviewStringJson: " + reviewsJsonString );
+            try{
+                mMovieTrailers = Json.readTrailersJson(trailerJsonString);
+                mTrailerAdapter.setMovieTrailersData(mMovieTrailers);
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+            try{
+                mMovieReviews = Json.readReviewsJson(reviewsJsonString);
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
 
             super.onPostExecute(strings);
         }
