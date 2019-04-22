@@ -194,12 +194,16 @@ public class DetailActivity extends AppCompatActivity implements TrailerRecycler
 
         @Override
         protected void onPostExecute(ArrayList<String> strings) {
-            Log.d(TAG, "DetailsQuery onPostExecute: payload size is: " + strings.size() );
-            if (strings.size() != 2){
+            if (strings == null){
                 return;
             }
-            String trailerJsonString = strings.get(0);
-            String reviewsJsonString = strings.get(1);
+            String trailerJsonString = "";
+            String reviewsJsonString = "";
+
+            if (strings.size() == 2){
+                trailerJsonString = strings.get(0);
+                reviewsJsonString = strings.get(1);
+            }
             Log.d(TAG, "onPostExecute: trailerStringJson: " + trailerJsonString );
             Log.d(TAG, "onPostExecute: reviewStringJson: " + reviewsJsonString );
             try{

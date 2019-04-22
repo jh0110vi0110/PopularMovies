@@ -16,7 +16,7 @@ public class Network {
     private static final String TAG = "util.Network";
     private static final String P_API_KEY = "api_key";
     private static final String API_KEY = "API KEY GOES HERE";
-    private static final String BASE_DATA_URL = "http://api.themoviedb.org/3/movie";
+    private static final String BASE_DATA_URL = "https://api.themoviedb.org/3/movie";
 
     public static URL buildDataUrl(int sortType) {
 
@@ -72,7 +72,7 @@ public class Network {
     }
 
     public static String createImageUrlString(String path){
-        final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/";
+        final String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/";
         final String IMAGE_ERROR_500PX_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Attenzione_architetto_fr_01.svg/500px-Attenzione_architetto_fr_01.svg.png";
         // size options...w125, w342, w500
         final String IMG_SIZE = "w342";
