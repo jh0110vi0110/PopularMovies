@@ -8,6 +8,9 @@
     <string name="vote_count_default">Votes:\u0020</string>
 
     <string name="trailers_label">Trailers:</string>
+    <string name="reviews_label">Reviews:</string>
+
+    <string name="no_reviews_found">No reviews were submitted for this movie.</string>
 
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>

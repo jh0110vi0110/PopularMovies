@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerRecycler
     private TrailerRecyclerAdapter mTrailerAdapter;
 
     private ImageView mDetailImageView, mFavoritesButtonImageView;
-    private TextView mTitleTextView, mOverviewTextView, mVoteAverageTextView, mReleaseDateTextView, mVoteCountTextView;
+    private TextView mTitleTextView, mOverviewTextView, mVoteAverageTextView, mReleaseDateTextView, mVoteCountTextView, mReviewContentTextView;
 
     private boolean isFavorite = false;
     private MovieDatabase mMovieDatabase;
@@ -70,8 +70,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerRecycler
         mReleaseDateTextView = (TextView) findViewById(R.id.tv_detail_release_date);
         mVoteCountTextView = (TextView) findViewById(R.id.tv_detail_vote_count);
         mFavoritesButtonImageView = (ImageView) findViewById(R.id.iv_detail_favorites_button);
-
-
+        mReviewContentTextView = (TextView) findViewById(R.id.tv_detail_review_content);
 
         Intent intentThatStartedThisActivity = getIntent();
 
@@ -161,6 +160,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerRecycler
         Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(movieTrailer.getUrl()));
         // Close window when video ends -stack overflow
         webIntent.putExtra("finish_on_ended", true);
+        appIntent.putExtra("finish_on_ended", true);
         try {
             startActivity(appIntent);
         } catch (ActivityNotFoundException e) {
@@ -210,12 +210,21 @@ public class DetailActivity extends AppCompatActivity implements TrailerRecycler
             }
             try{
                 mMovieReviews = Json.readReviewsJson(reviewsJsonString);
+                displayReviews(mMovieReviews);
             }catch (JSONException e){
                 e.printStackTrace();
             }
+        }
+    }
 
-
-            super.onPostExecute(strings);
+    public void displayReviews (MovieReview[] movieReviews){
+        if (movieReviews.length > 0){
+            for (int i = 0; i < movieReviews.length; i++){
+                mReviewContentTextView.append(movieReviews[i].getAuthor() + " says:\n\n\"" +
+                        movieReviews[i].getContent() + "\"\n\n -----------------------------------\n\n");
+            }
+        }else{
+            mReviewContentTextView.append(getString(R.string.no_reviews_found));
         }
     }
 }
