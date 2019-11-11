@@ -142,7 +142,7 @@ public class Movie implements Parcelable {
         dest.writeString(mVoteCount);
     }
 
-    static final Parcelable.Creator<Movie> CREATOR
+    public static final Parcelable.Creator<Movie> CREATOR
             = new Parcelable.Creator<Movie>(){
 
         @Override
