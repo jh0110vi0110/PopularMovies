@@ -1,6 +1,8 @@
 # PopularMovies
 Udacity Android Developer Nanodegree Project
 
+Browse a poster list of current most popular or highest rated movie releases.  View individual movie details and create a list of your favorites.
+
 ## Setup
 TMDb API Key is required.
 1. Sign up for an account at [www.themoviedb.org](www.themoviedb.org) and get an API key.
